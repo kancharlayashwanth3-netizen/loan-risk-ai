@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Register - LoanRiskAI{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card auth-card shadow-sm mt-5">
+      <div class="card-body p-4">
+        <div class="text-center mb-4">
+          <i class="fa-solid fa-user-plus fa-2x text-primary"></i>
+          <h3 class="mt-2 fw-bold">Create Account</h3>
+          <p class="text-muted">Join LoanRisk<span class="text-primary fw-bold">AI</span></p>
+        </div>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" name="username" required autofocus>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" required minlength="6">
+            <div class="form-text">At least 6 characters.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2"><i class="fa-solid fa-user-plus"></i> Register</button>
+        </form>
+        <p class="text-center mt-3 mb-0">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}History - LoanRiskAI{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left text-primary"></i> Application History</h3>
+  <a href="{{ url_for('predict') }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> New Application</a>
+</div>
+
+{% if records %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Applicant</th><th>CIBIL</th><th>Risk</th><th>Decision</th><th>Eligibility</th><th>Date</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in records %}
+          <tr>
+            <td style="cursor:pointer;" onclick="window.location='{{ url_for('result', prediction_id=r.id) }}'">{{ r.applicant_name }}</td>
+            <td>{{ r.cibil_score }}</td>
+            <td><span class="badge bg-{{ 'success' if r.risk_level == 'Low' else 'warning' if r.risk_level == 'Medium' else 'danger' }}">{{ r.risk_level }}</span></td>
+            <td><span class="badge bg-{{ 'success' if r.prediction == 'Approved' else 'danger' }}">{{ r.prediction }}</span></td>
+            <td>{{ r.eligibility }}</td>
+            <td class="text-muted small">{{ r.created_at.strftime('%d %b %Y, %I:%M %p') }}</td>
+            <td>
+              <form method="POST" action="{{ url_for('delete_record', prediction_id=r.id) }}" onsubmit="return confirm('Delete this record?');">
+                <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="card shadow-sm text-center py-5">
+  <div class="card-body">
+    <i class="fa-solid fa-inbox fa-3x text-muted mb-3"></i>
+    <h5>No applications yet</h5>
+    <a href="{{ url_for('predict') }}" class="btn btn-primary mt-2"><i class="fa-solid fa-plus"></i> New Application</a>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

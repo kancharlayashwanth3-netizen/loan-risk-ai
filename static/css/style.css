@@ -1,0 +1,43 @@
+body {
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.app-navbar {
+  background: linear-gradient(90deg, #0f172a, #1e3a8a);
+}
+
+.auth-card {
+  border: none;
+  border-radius: 14px;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+.stat-card {
+  border-radius: 12px;
+  transition: transform 0.15s ease;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.btn-primary {
+  background-color: #1e3a8a;
+  border-color: #1e3a8a;
+}
+.btn-primary:hover {
+  background-color: #172a63;
+  border-color: #172a63;
+}
+
+.text-primary {
+  color: #1e3a8a !important;
+}

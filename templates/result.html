@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Result - LoanRiskAI{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="fw-bold mb-0"><i class="fa-solid fa-clipboard-check text-primary"></i> Application Result</h3>
+  <a href="{{ url_for('predict') }}" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-plus"></i> New Application</a>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card shadow-sm text-center h-100 {{ 'border-success' if r.prediction == 'Approved' else 'border-danger' }}">
+      <div class="card-body">
+        <p class="text-muted mb-1">Loan Decision</p>
+        {% if r.prediction == 'Approved' %}
+          <h2 class="fw-bold text-success"><i class="fa-solid fa-circle-check"></i> Approved</h2>
+        {% else %}
+          <h2 class="fw-bold text-danger"><i class="fa-solid fa-circle-xmark"></i> Rejected</h2>
+        {% endif %}
+        <p class="text-muted mt-2 mb-0">for {{ r.applicant_name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card shadow-sm text-center h-100">
+      <div class="card-body">
+        <p class="text-muted mb-1">CIBIL-style Score</p>
+        <h2 class="fw-bold">{{ r.cibil_score }} <span class="fs-6 text-muted">/ 900</span></h2>
+        <span class="badge rounded-pill bg-{{ 'success' if r.cibil_score >= 750 else 'warning' if r.cibil_score >= 650 else 'danger' }}">
+          {{ r.eligibility }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card shadow-sm text-center h-100">
+      <div class="card-body">
+        <p class="text-muted mb-1">Risk Score</p>
+        <h2 class="fw-bold">{{ r.risk_score }}%</h2>
+        <span class="badge rounded-pill bg-{{ 'success' if r.risk_level == 'Low' else 'warning' if r.risk_level == 'Medium' else 'danger' }}">
+          {{ r.risk_level }} Risk
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-uppercase text-muted fw-bold mb-3">Application Summary</h6>
+        <table class="table table-sm mb-0">
+          <tr><td>Age</td><td class="text-end">{{ r.age }}</td></tr>
+          <tr><td>Marital Status</td><td class="text-end">{{ 'Married' if r.married == 'Yes' else 'Unmarried' }}</td></tr>
+          <tr><td>Dependents</td><td class="text-end">{{ r.dependents }}</td></tr>
+          <tr><td>Education</td><td class="text-end">{{ r.education }}</td></tr>
+          <tr><td>Self Employed</td><td class="text-end">{{ r.self_employed }}</td></tr>
+          <tr><td>Applicant Income</td><td class="text-end">₹{{ '{:,.0f}'.format(r.applicant_income) }}/mo</td></tr>
+          <tr><td>Co-applicant Income</td><td class="text-end">₹{{ '{:,.0f}'.format(r.coapplicant_income) }}/mo</td></tr>
+          <tr><td>Loan Amount</td><td class="text-end">₹{{ '{:,.0f}'.format(r.loan_amount) }}</td></tr>
+          <tr><td>Loan Term</td><td class="text-end">{{ r.loan_term }} months</td></tr>
+          <tr><td>Existing Loans</td><td class="text-end">{{ r.existing_loans }}</td></tr>
+          <tr><td>Repayment History</td><td class="text-end">{{ r.credit_history_label }}</td></tr>
+          <tr><td>Property Area</td><td class="text-end">{{ r.property_area }}</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6 class="text-uppercase text-muted fw-bold mb-3"><i class="fa-solid fa-lightbulb text-warning"></i> Suggestions to Improve Creditworthiness</h6>
+        <ul class="list-group list-group-flush">
+          {% for tip in suggestions %}
+          <li class="list-group-item"><i class="fa-solid fa-check text-primary me-2"></i>{{ tip }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-4">
+  <a href="{{ url_for('dashboard') }}" class="btn btn-primary px-4"><i class="fa-solid fa-gauge"></i> Go to Dashboard</a>
+</div>
+
+{% endblock %}

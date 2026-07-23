@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}New Application - LoanRiskAI{% endblock %}
+{% block content %}
+<h3 class="fw-bold mb-4"><i class="fa-solid fa-file-circle-plus text-primary"></i> New Loan Application</h3>
+
+<div class="card shadow-sm">
+  <div class="card-body p-4">
+    <form method="POST">
+      <h6 class="text-uppercase text-muted fw-bold mb-3">Applicant Details</h6>
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label class="form-label">Applicant Name</label>
+          <input type="text" class="form-control" name="applicant_name" placeholder="e.g. Rahul Sharma">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Age</label>
+          <input type="number" class="form-control" name="age" min="18" max="75" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Gender</label>
+          <select class="form-select" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Marital Status</label>
+          <select class="form-select" name="married" required>
+            <option value="Yes">Married</option>
+            <option value="No">Unmarried</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Dependents</label>
+          <select class="form-select" name="dependents" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3+</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Education</label>
+          <select class="form-select" name="education" required>
+            <option value="Graduate">Graduate</option>
+            <option value="Not Graduate">Not Graduate</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Self Employed</label>
+          <select class="form-select" name="self_employed" required>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <h6 class="text-uppercase text-muted fw-bold mb-3">Income & Loan Details</h6>
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label class="form-label">Applicant Monthly Income (₹)</label>
+          <input type="number" class="form-control" name="applicant_income" min="0" step="1" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Co-applicant Monthly Income (₹)</label>
+          <input type="number" class="form-control" name="coapplicant_income" min="0" step="1" value="0">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Loan Amount Requested (₹)</label>
+          <input type="number" class="form-control" name="loan_amount" min="1" step="1" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Loan Term (months)</label>
+          <select class="form-select" name="loan_term" required>
+            <option value="120">120 (10 yrs)</option>
+            <option value="180">180 (15 yrs)</option>
+            <option value="240">240 (20 yrs)</option>
+            <option value="300">300 (25 yrs)</option>
+            <option value="360" selected>360 (30 yrs)</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Existing Active Loans</label>
+          <select class="form-select" name="existing_loans" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Property Area</label>
+          <select class="form-select" name="property_area" required>
+            <option value="Urban">Urban</option>
+            <option value="Semiurban">Semiurban</option>
+            <option value="Rural">Rural</option>
+          </select>
+        </div>
+      </div>
+
+      <h6 class="text-uppercase text-muted fw-bold mb-3">Credit / Repayment History</h6>
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <label class="form-label">Past Repayment Behavior</label>
+          <select class="form-select" name="credit_history_label" required>
+            <option value="Good">Good — always on time</option>
+            <option value="Average">Average — occasional delays</option>
+            <option value="Poor">Poor — frequent defaults/delays</option>
+          </select>
+          <div class="form-text">Used to estimate a CIBIL-style score along with your income and obligations.</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-robot"></i> Analyze & Predict</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
